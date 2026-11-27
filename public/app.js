@@ -116,7 +116,7 @@ function vSettings() {
 // ---- dialogs
 const EF = ['name', 'category', 'amount', 'cycle', 'interval_days', 'next_due_date', 'payment_method', 'status', 'notes', 'url'];
 function openEdit(id) {
-  const x = id ? S.subs.find((s) => s.id == id) : { category: 'Other', cycle: 'monthly', next_due_date: today(), status: 'active', auto_renew: 1, interval_days: 30 };
+  const x = id ? S.subs.find((s) => s.id == id) : { category: '', cycle: 'monthly', next_due_date: today(), status: 'active', auto_renew: 1, interval_days: 30 };
   const f = $('#editForm');
   f.reset();
   $('#editTitle').textContent = id ? 'Edit subscription' : 'Add subscription';
@@ -211,7 +211,8 @@ $('#importFile').addEventListener('change', guard(async (e) => {
 (async () => {
   try {
     S.cfg = await api('/api/config');
-    $('#cats').innerHTML = S.cfg.categories.map((c) => `<option value="${esc(c)}">`).join('');
+    $('#editForm').elements.category.innerHTML = '<option value="">Select category</option>' +
+      S.cfg.categories.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
     $('#editForm').elements.cycle.innerHTML = S.cfg.cycles.map((c) => `<option>${c}</option>`).join('');
     await load();
   } catch (e) { toast(e.message); }
