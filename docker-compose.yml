@@ -7,9 +7,9 @@ services:
     restart: unless-stopped
     user: "${PUID:-1000}:${PGID:-1000}"
     ports:
-      - "${PORT:-3000}:${PORT:-3000}"
+      - "${PORT}:${PORT}"
     environment:
-      PORT: ${PORT:-3000}
+      PORT: ${PORT}
       DATA_DIR: /data
       TZ: ${TZ:-Asia/Kolkata}
       CURRENCY: ${CURRENCY:-INR}
